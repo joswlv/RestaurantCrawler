@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>레스토랑 정보</title>
+
+    <style>
+        table,td,tr {
+            border: 1px solid black;
+        }
+        table {
+            border-collapse: collapse;
+            width:100%;
+        }
+        tr {
+            text-align: center;
+        }
+        th {
+            height: 50px;
+        }
+        div {
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <form method="POST">{% csrf_token %}
+        <label>레스토랑 이름</label>
+        {{ form.as_p }}
+        <button type="submit">추가</button>
+    </form>
+</div>
+<div>
+    <table>
+        <tr>
+            <th>레스토랑 이름</th>
+            <th>주소</th>
+            <th>망고플레이트 평점</th>
+        </tr>
+        {%  for item in boardList %}
+            <tr>
+                <td>{{ item.restaurantName }}</td>
+                <td>{{ item.restaurantAddress }}</td>
+                <td>{{ item.mangoRatingValue }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
