@@ -11,6 +11,9 @@ def restaurantBlog(request):
     if request.method == "POST":
         form = RestaurantNameForm(request.POST)
         restaurantInfo = getMangoRate(request.POST.get('restaurantName'))
+
+        print("----레스토랑INFO---")
+        print(restaurantInfo)
         if form.is_valid():
             item = form.save(commit=False)
             item.restaurantAddress = restaurantInfo['address']
@@ -31,6 +34,15 @@ def getMangoRate(searchVal):
 
     address = navigator.find("meta", itemprop="address")
     ratingValue = navigator.find("meta", itemprop="ratingValue")
-    result = {'address':address["content"],'ratingValue':ratingValue["content"]}
 
+
+    if not address is None and not ratingValue is None:
+        result = {'address':address["content"],'ratingValue':ratingValue["content"]}
+    elif address is None:
+        address = "망고플레이트 검색 결과가 없네요. ㅜ.ㅜ"
+        ratingValue = 0
+        result = {'address':address,'ratingValue':ratingValue}
+    elif ratingValue is None:
+        ratingValue = 0
+        result = {'address': address["content"], 'ratingValue': ratingValue}
     return result
